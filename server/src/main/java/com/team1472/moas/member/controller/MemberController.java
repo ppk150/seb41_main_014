@@ -4,6 +4,7 @@ import com.team1472.moas.exception.BusinessLogicException;
 import com.team1472.moas.exception.ExceptionCode;
 import com.team1472.moas.member.dto.MemberDeleteDto;
 import com.team1472.moas.member.entity.Member;
+import com.team1472.moas.member.entity.Role;
 import com.team1472.moas.member.mapper.MemberMapper;
 import com.team1472.moas.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,7 +77,9 @@ public class MemberController {
         String email = principal.getName();
 
         Member findMember = service.findMemberbyemail(email);
+        findMember.setRole(Role.USER);
         MemberResponseDto response = mapper.memberToMemberResponseDto(findMember);
+
         SingleResponse<MemberResponseDto> singleResponseDto = new SingleResponse<>(response);
 
         return new ResponseEntity(singleResponseDto, HttpStatus.OK);

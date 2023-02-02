@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.team1472.moas.member.entity.Role.SUSPENDED_USER;
+import static com.team1472.moas.member.entity.Role.USER;
+
 @RequiredArgsConstructor
 @Service
 public class MemberService {
@@ -36,6 +39,9 @@ public class MemberService {
         refreshToken.setRefreshToken(token);
         tokenRepository.save(refreshToken);
     }
+
+
+
     //updateMember메서드 (회원 업로드)
     public Member updateMember(Member member, String email) {
 
@@ -76,10 +82,11 @@ public class MemberService {
 
         long memberId = findMember.getId();
 
-        memberRepository.deleteById(memberId);
+        findMember.setRole(SUSPENDED_USER);
 
 
     }
+
 
     //findMember메서드(회원 찾기)
     public Member findMember(long memberId) {
